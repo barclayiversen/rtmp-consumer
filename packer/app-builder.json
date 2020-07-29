@@ -1,0 +1,82 @@
+{
+    "description": "Web app that consumes live stream",
+    "variables": {
+        "project": "{{env `PROJECT`}}",
+        "subnet": "{{env `SUBNET`}}",
+        "network": "{{env `NETWORK`}}",
+        "password": "{{env `PASSWORD`}}"
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "zone": "us-west1-a",
+            "project_id": "{{user `project`}}",
+            "instance_name": "app-builder",
+            "image_family": "golang-server",
+            "image_name": "golang-server-{{timestamp}}",
+            "image_storage_locations": ["us-west1"],
+            "ssh_username": "root",
+            "source_image": "ubuntu-1604-xenial-v20200722",
+            "disk_size": "10",
+            "machine_type": "n1-standard-2"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt update",
+                "sudo apt upgrade -y",
+                "git clone https://github.com/sergey-dryabzhinsky/nginx-rtmp-module.git",
+                "sudo apt install build-essential libpcre3 libpcre3-dev libssl-dev zlib1g zlib1g-dev -y",
+                "wget https://nginx.org/download/nginx-1.18.0.tar.gz",
+                "tar -xf nginx-1.18.0.tar.gz",
+                "cd nginx-1.18.0/",
+                "sudo ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module",
+                "sudo make",
+                "sudo make install",
+                "sudo mkdir -p /nginx/hls"
+            ]
+        },
+        {
+            "type" : "file",
+            "source": "./nginx.conf",
+            "destination": "/usr/local/nginx/conf/"
+        },
+        {
+            "type" : "file",
+            "source": "./nginx.service",
+            "destination": "/lib/systemd/system/"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo systemctl enable nginx"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "wget https://golang.org/dl/go1.14.6.linux-amd64.tar.gz",
+                "tar -xzf go1.14.6.linux-amd64.tar.gz",
+                "sudo mv go /usr/local/",
+                "sudo su -c 'adduser mixfree /bin/bash mixfree -G mixfree'",
+                "sudo chpasswd << 'END' mixfree:{{user `password`}} END",
+                "echo PATH=$PATH:/usr/local/go/bin >> /home/mixfree/.profile",
+                "sudo su mixfree",
+                "cd ~",
+                "mkdir go",
+                "cd go",
+                "mkdir src",
+                "mkdir bin",
+                "cd src",
+                "git clone https://github.com/barclayiversen/mixfreely.git",
+                "cd mixfreely",
+                "go install",
+                "cp -r templates ../bin/",
+                "cp -r static ../bin/"
+
+            ]
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+[Unit]
+Description=Sleep service
+ConditionPathExists=/home/mixfree_ly/go/bin/mixfreely
+After=network.target
+
+[Service]
+Type=simple
+User=mixfree
+Group=mixfree
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+StartLimitIntervalSec=60
+
+WorkingDirectory=/home/mixfree_ly/go/bin
+ExecStart=/home/mixfree_ly/go/bin/mixfreely
+
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/mixfree
+ExecStartPre=/bin/chown syslog:adm /var/log/mixfree
+ExecStartPre=/bin/chmod 755 /var/log/mixfree
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mixfree
+
+[Install]
+WantedBy=multi-user.target
