@@ -1,1 +1,1 @@
-output "go_ip" { value = google_compute_address.static.address }
+output "go_ip" { value = google_compute_address.app.address }
