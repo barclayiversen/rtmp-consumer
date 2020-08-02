@@ -63,22 +63,20 @@
                 "wget https://golang.org/dl/go1.14.6.linux-amd64.tar.gz",
                 "tar -xzf go1.14.6.linux-amd64.tar.gz",
                 "sudo mv go /usr/local/",
-                "sudo su -c 'adduser mixfree /bin/bash mixfree -G mixfree'",
-                "sudo chpasswd << 'END' mixfree:{{user `password`}} END",
-                "echo PATH=$PATH:/usr/local/go/bin >> /home/mixfree/.profile",
-                "sudo su mixfree",
-                "cd ~",
+                "export PATH=$PATH:/usr/local/go/bin",
+                "cd /home/ubuntu",
                 "mkdir go",
                 "cd go",
                 "mkdir src",
                 "mkdir bin",
                 "cd src",
-                "git clone https://github.com/barclayiversen/mixfreely.git",
+                "git clone git://github.com/barclayiversen/mixfreely.git",
                 "cd mixfreely",
-                "go install",
-                "cp -r templates ../bin/",
-                "cp -r static ../bin/"
-
+                "go build",
+                "cp mixfreely ../../bin/",
+                "cp -r templates ../../bin/",
+                "cp -r static ../../bin/",
+                "sudo systemctl enable mixfree"
             ]
         }
     ]
