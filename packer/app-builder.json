@@ -13,12 +13,14 @@
             "project_id": "{{user `project`}}",
             "instance_name": "app-builder",
             "image_family": "golang-server",
+            "address": "golang-server-addresss",
             "image_name": "golang-server-{{timestamp}}",
             "image_storage_locations": ["us-west1"],
             "ssh_username": "root",
             "source_image": "ubuntu-1604-xenial-v20200722",
             "disk_size": "10",
-            "machine_type": "n1-standard-2"
+            "machine_type": "n1-standard-2",
+            "tags": ["http-server", "https-server"]
         }
     ],
     "provisioners": [
