@@ -53,10 +53,9 @@
             "destination": "/lib/systemd/system/"
         },
         {
-            "type": "shell",
-            "inline": [
-                "sudo systemctl enable nginx"
-            ]
+            "type" : "file",
+            "source": "./mixfree.service",
+            "destination": "/lib/systemd/system/"
         },
         {
             "type": "shell",
