@@ -11,6 +11,6 @@ terraform {
 
     backend "gcs" {
         bucket = "mixfreely"
-        prefix = "foundation/"
+        prefix = "appip/"
     }
 }
