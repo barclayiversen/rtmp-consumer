@@ -13,13 +13,13 @@
             "project_id": "{{user `project`}}",
             "instance_name": "app-builder",
             "image_family": "golang-server",
-            "address": "golang-server-addresss",
+            "address": "golang-server-address",
             "image_name": "golang-server-{{timestamp}}",
             "image_storage_locations": ["us-west1"],
             "ssh_username": "root",
             "source_image": "ubuntu-1604-xenial-v20200722",
             "disk_size": "10",
-            "machine_type": "n1-standard-2",
+            "machine_type": "n1-standard-1",
             "tags": ["http-server", "https-server"]
         }
     ],
@@ -39,7 +39,7 @@
                 "sudo make install",
                 "sudo mkdir -p /nginx/hls",
                 "sudo apt install certbot -y",
-                "sudo certbot certonly --standalone --non-interactive --agree-tos --email barclayiversen@gmail.com --domains theytookmydomain.com,www.theytookmydomain.com"
+                "sudo certbot certonly --standalone --non-interactive --agree-tos --email barclayiversen@gmail.com --domains thatsrickdiculous.com,www.thatsrickdiculous.com"
             ]
         },
         {

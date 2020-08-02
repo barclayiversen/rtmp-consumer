@@ -1,0 +1,1 @@
+output "go_ip" { value = google_compute_address.app.address }
