@@ -18,3 +18,15 @@ terraform/\.terraform/terraform\.tfstate
 terraform/terraform\.tfstate
 
 terraform/terraform\.tfstate\.backup
+
+terraform/network/\.terraform/terraform\.tfstate
+
+terraform/network/terraform\.tfstate
+
+terraform/network/terraform\.tfstate\.backup
+
+terraform/compute/\.terraform/plugins/linux_amd64/lock\.json
+
+terraform/compute/\.terraform/plugins/linux_amd64/terraform-provider-google_v3\.32\.0_x5
+
+terraform/compute/\.terraform/terraform\.tfstate
